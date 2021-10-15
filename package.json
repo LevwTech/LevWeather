@@ -1,0 +1,24 @@
+{
+  "name": "weather-app",
+  "version": "1.0.0",
+  "description": "weather app using node",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Levvw/node-weather-app.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Levvw/node-weather-app/issues"
+  },
+  "homepage": "https://github.com/Levvw/node-weather-app#readme",
+  "dependencies": {
+    "node-fetch": "^3.0.0",
+    "request": "^2.88.2"
+  }
+}
