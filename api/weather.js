@@ -5,17 +5,11 @@ function weather(url) {
       url,
     },
     (error, data) => {
-      if (error) {
+      if (error || JSON.parse(data.body).cod === 401) {
         console.log("something went wrong");
-      } else {
-        if (JSON.parse(data.body).cod === 401) {
-          console.log("something went wrong");
-          return;
-        }
-        console.log(
-          `it is currently ${JSON.parse(data.body).main.temp} celsius`
-        );
+        return;
       }
+      console.log(`it is currently ${JSON.parse(data.body).main.temp} celsius`);
     }
   );
 }
