@@ -1,16 +1,28 @@
 const request = require("request");
+
 function weather(url) {
-  request(
-    {
-      url,
-    },
-    (error, data) => {
-      if (error || JSON.parse(data.body).cod === 401) {
-        console.log("something went wrong");
-        return;
-      }
-      console.log(`it is currently ${JSON.parse(data.body).main.temp} celsius`);
+  request({ url, json: true }, (error, response) => {
+    if (error || response.body.message === "Not Authorized - Invalid Token") {
+      console.log("something went wrong");
+      return;
     }
-  );
+    const lon = response.body.features[0].center[0];
+    const lat = response.body.features[0].center[1];
+
+    request(
+      {
+        url: `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=c5395899415e6f2bd6a1ec022bddde98&units=metric`,
+      },
+      (error, data) => {
+        if (error || JSON.parse(data.body).cod === 401) {
+          console.log("something went wrong");
+          return;
+        }
+        console.log(
+          `it is currently ${JSON.parse(data.body).main.temp} celsius.`
+        );
+      }
+    );
+  });
 }
 module.exports = weather;
