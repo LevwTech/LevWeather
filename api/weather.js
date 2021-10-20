@@ -20,7 +20,9 @@ function weather(url) {
           return;
         }
         console.log(
-          `it is currently ${JSON.parse(data.body).main.temp} celsius.`
+          `It is currently ${JSON.parse(data.body).main.temp} °C in ${
+            JSON.parse(data.body).name
+          }.`
         );
       }
     );
