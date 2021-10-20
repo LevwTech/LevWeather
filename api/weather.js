@@ -2,7 +2,7 @@ const request = require("request");
 
 function weather(url) {
   request({ url, json: true }, (error, response) => {
-    if (error || response.body.message === "Not Authorized - Invalid Token") {
+    if (error || response.body.features.length === 0) {
       console.log("something went wrong");
       return;
     }
@@ -10,6 +10,7 @@ function weather(url) {
     const lat = response.body.features[0].center[1];
 
     request(
+      // Fetching a Weather API with lat & lon which were fetched from Geolocation API
       {
         url: `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=c5395899415e6f2bd6a1ec022bddde98&units=metric`,
       },
