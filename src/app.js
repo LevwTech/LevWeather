@@ -2,11 +2,11 @@ const path = require("path");
 const express = require("express");
 const hbs = require("hbs");
 const weather = require("./api/weather");
-const city = "paris";
+// const city = "paris";
 
-const geocodeURL = `https://api.mapbox.com/geocoding/v5/mapbox.places/${city}.json?access_token=pk.eyJ1IjoibGV2dyIsImEiOiJja3V3dnh0ZXcwbzlpMnByZnZvMGZ4Y2xzIn0.JI7ULRIutDs35rWlEIbuMA`;
+// const geocodeURL = `https://api.mapbox.com/geocoding/v5/mapbox.places/${city}.json?access_token=pk.eyJ1IjoibGV2dyIsImEiOiJja3V3dnh0ZXcwbzlpMnByZnZvMGZ4Y2xzIn0.JI7ULRIutDs35rWlEIbuMA`;
 
-weather(geocodeURL);
+// weather(geocodeURL);
 
 const app = express();
 
@@ -31,7 +31,18 @@ app.get("", (req, res) => {
 });
 app.get("/weather", (req, res) => {
   if (!req.query.adress) return res.send({ error: "please provide an adress" });
-  res.send(req.query);
+  const city = req.query.adress;
+  const geocodeURL = `https://api.mapbox.com/geocoding/v5/mapbox.places/${city}.json?access_token=pk.eyJ1IjoibGV2dyIsImEiOiJja3V3dnh0ZXcwbzlpMnByZnZvMGZ4Y2xzIn0.JI7ULRIutDs35rWlEIbuMA`;
+  const [status, msg] = weather(geocodeURL);
+  if (status) {
+    res.send({
+      weather: msg,
+    });
+  } else {
+    res.send({
+      error: msg,
+    });
+  }
 });
 
 app.get("/about", (req, res) => {
@@ -46,13 +57,6 @@ app.get("/help", (req, res) => {
     helpText: "This is some helpful text.",
     title: "Help",
     name: "Levw",
-  });
-});
-
-app.get("/weather", (req, res) => {
-  res.send({
-    forecast: "It is snowing",
-    location: "Sharm",
   });
 });
 

@@ -1,9 +1,9 @@
 const request = require("request");
-
+let returnValue = [false, "something went wrong"];
 function weather(url) {
   request({ url, json: true }, (error, response) => {
     if (error || response.body.features.length === 0) {
-      console.log("something went wrong");
+      returnValue = [false, "something went wrong"];
       return;
     }
     const lon = response.body.features[0].center[0];
@@ -16,16 +16,19 @@ function weather(url) {
       },
       (error, data) => {
         if (error || JSON.parse(data.body).cod === 401) {
-          console.log("something went wrong");
+          returnValue = [false, "something went wrong"];
           return;
         }
-        console.log(
+        returnValue = [
+          true,
           `It is currently ${JSON.parse(data.body).main.temp} °C in ${
             JSON.parse(data.body).name
-          }.`
-        );
+          }.`,
+        ];
+        return;
       }
     );
   });
+  return returnValue;
 }
 module.exports = weather;
