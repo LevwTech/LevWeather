@@ -54,7 +54,8 @@ app.get("/about", (req, res) => {
 
 app.get("/help", (req, res) => {
   res.render("help", {
-    helpText: "Enter the city and click on search.",
+    helpText:
+      "Enter the city and click on search. sorry sometimes you need to click multiple times on 'Find Weather' ｡ﾟ･ (>﹏<) ･ﾟ｡",
     title: "Help",
     name: "Levw",
   });
@@ -76,6 +77,6 @@ app.get("*", (req, res) => {
   });
 });
 
-app.listen(3000, () => {
+app.listen(process.env.PORT || 3000, () => {
   console.log("Server is up on port 3000.");
 });

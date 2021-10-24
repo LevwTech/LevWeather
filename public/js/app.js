@@ -7,7 +7,7 @@ form.addEventListener("submit", (e) => {
   e.preventDefault();
   output.textContent = "Loading..";
   const city = input.value;
-  fetch(`http://localhost:3000/weather?adress=${city}`)
+  fetch(`/weather?adress=${city}`)
     .then((res) => {
       if (!res) throw new error("something went wrong!");
       return res.json();
